@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -49,11 +50,12 @@ func login(c *gin.Context) {
 	// username := c.PostForm("username")
 	// c.PostForm("password")
 	var uc UserCredential
-	if c.ShouldBind(&uc) == nil {
+	if err := c.ShouldBind(&uc); err != nil {
+		fmt.Println(err.Error())
+	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "OK",
 			"data":    uc.Username,
 		})
-		// c.String(http.StatusOK, "Hello %s", uc.Username)
 	}
 }
