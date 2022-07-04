@@ -10,6 +10,6 @@ type UserCredential struct {
 	Password string `json:"user_password"`
 }
 
-type AuthHandler struct {
+type AuthHeader struct {
 	Authorizationheader string `header:"Authorization"`
 }

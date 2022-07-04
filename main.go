@@ -6,6 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// server side rendering (ssr) -> serving by backend
+// api
+
 func main() {
 	// r := gin.Default()
 	// r.GET("/ping", func(c *gin.Context) {
