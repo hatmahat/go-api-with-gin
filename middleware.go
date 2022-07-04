@@ -19,7 +19,7 @@ func AuthMiddleWare() gin.HandlerFunc {
 				c.Abort()
 			}
 
-			if h.Authorizationheader == "ini_toker" {
+			if h.Authorizationheader == "ini_token" {
 				c.Next()
 			} else {
 				c.JSON(http.StatusUnauthorized, gin.H{
