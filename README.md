@@ -56,7 +56,7 @@ Use json
 ```
 
 #### All Response
-```json
+```go
 {
     "message":"string",
     "data":interface{}
