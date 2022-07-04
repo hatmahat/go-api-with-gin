@@ -19,6 +19,7 @@ func main() {
 	// r.Run()
 
 	routerEngine := gin.Default()
+	routerEngine.Use(AuthMiddleWare())
 
 	/*
 		www.enigma.com/login
