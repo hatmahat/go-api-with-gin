@@ -16,13 +16,29 @@ func main() {
 	// r.Run()
 
 	routerEngine := gin.Default()
+
+	/*
+		www.enigma.com/login
+		www.enigma.com/register
+		www.enigma.com/logout
+		www.enigma.com
+
+		grouping: master
+		www.enigma.com/master/users
+		www.enigma.com/master/student
+
+		www.enigma.com/api/auth/login
+	*/
+
 	routerEngine.GET("/", func(c *gin.Context) {
 		c.String(200, "Healthy Check")
 	})
 
-	routerEngine.GET("/greeting/:name", greeting)
+	rgAuth := routerEngine.Group("/api/auth")
+	rgAuth.POST("/login", login)
 
-	routerEngine.POST("/login", login)
+	rgMaster := routerEngine.Group("/api/master")
+	rgMaster.GET("/greeting/:name", greeting)
 
 	err := routerEngine.Run("localhost:8888")
 	if err != nil {
@@ -45,11 +61,16 @@ func greeting(c *gin.Context) {
 	c.String(200, "Greeting path... %s %s %s", name, kec, kel)
 }
 
+/*
+Model Binding & Validation
+-> Shouldbind, ShouldbingJSON, -> using struct tag binding:required
+*/
+
 func login(c *gin.Context) {
 	// username := c.PostForm("username")
 	// c.PostForm("password")
 	var uc UserCredential
-	if err := c.ShouldBind(&uc); err != nil {
+	if err := c.BindJSON(&uc); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
