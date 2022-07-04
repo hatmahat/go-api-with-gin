@@ -17,9 +17,26 @@ func main() {
 	routerEngine.GET("/", func(c *gin.Context) {
 		c.String(200, "Healthy Check")
 	})
-	err := routerEngine.Run(":8888")
+
+	routerEngine.GET("/greeting/:name", greeting)
+
+	err := routerEngine.Run("localhost:8888")
 	if err != nil {
 		panic(err)
 	}
 
+}
+
+func greeting(c *gin.Context) {
+	name := c.Param("name") // with parameter :name at path /greeting
+	kec := c.Query("kec")   //Query param / String in path -> key?=value
+	kel := c.Query("kel")
+
+	/*
+		Any required or mandatory attributes should be added as path param
+		Any optional attributes should be added as query param
+		params used for filtering data are usually used as query param
+	*/
+
+	c.String(200, "Greeting path... %s %s %s", name, kec, kel)
 }
