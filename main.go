@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,6 +21,8 @@ func main() {
 	})
 
 	routerEngine.GET("/greeting/:name", greeting)
+
+	routerEngine.POST("/login", login)
 
 	err := routerEngine.Run("localhost:8888")
 	if err != nil {
@@ -39,4 +43,17 @@ func greeting(c *gin.Context) {
 	*/
 
 	c.String(200, "Greeting path... %s %s %s", name, kec, kel)
+}
+
+func login(c *gin.Context) {
+	// username := c.PostForm("username")
+	// c.PostForm("password")
+	var uc UserCredential
+	if c.ShouldBind(&uc) == nil {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "OK",
+			"data":    uc.Username,
+		})
+		// c.String(http.StatusOK, "Hello %s", uc.Username)
+	}
 }
